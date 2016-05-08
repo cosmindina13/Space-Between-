@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title> Test Area </title> 
+    <link rel="stylesheet" href="node_modules/angular-material/angular-material.css">  
+    <link rel="stylesheet" href="css/style.css" >
+    <link rel="stylesheet" href="css/lightBox.css" >  
+ </head>
+   
+<body ng-app="CoolList" ng-controller="classifiedsCtrl" > 
+  <!--Begiing Toolbar-->
+  <md-toolbar> 
+      <div class="md-toolbar-tools">
+        <p><strong>Space Between</strong></p>
+          
+        <!--Filter Items Button-->
+          <md-button class="md-primary" ng-click="showFilter = true">
+          <ng-md-icon icon="search" size="22" style="fill: #ddd"></ng-md-icon> Filter Items   </md-button>
+
+      </div>
+  </md-toolbar> 
+  <!-- End Toolbar -->
+
+  <!--// Filter  Item Box-->
+  <div class="filters" layout="row" layout-align="center center" ng-show ="showFilter">
+      <md-input-container>
+          <lable> Enter Search Item </lable>
+          <input type="text" ng-model="classifiedFilter">
+      </md-input-container>
+
+  </div>
+    <!--// End Filter  Item Box-->
+  
+  <!--< Begining Posts Template-->
+<md-content class="md-padding" layout="row" layout-wrap>
+  <md-card   ng-repeat="classified in space_between |filter: classifiedFilter " class="classified" > 
+ <!--Post Image-->
+  <div class=imgHolder>
+    <a class="imgStyle" ng-click="showContact = true"> <img class="imgStyle" ng-src=" {{ classified.media.m }}" alt="Nothing usefull, Just a missing Image"></a>
+  </div>
+    <md-card-content class="space-info" >
+    
+
+<!--Display Content In Content Boxes-->
+    <div   ng-show="!showContact"> <!-- Start Display Content (except the  Image) -->
+            <a ng-click="showContact = true" ><h2 class="md-title"> {{ classified.title }}</h2></a> <!-- Display Title -->
+            <p><a href="https://www.flickr.com/photos/{{classified.author_id}}" target="_blank">Post Author</a>  &nbsp;&nbsp; <!-- Display Author -->
+             {{ classified.published | date }}  &nbsp;&nbsp; <!-- Display Date -->
+            <a  href=" {{classified.link}}" target="_blank">View on Flickr</a> </p> <!-- Display Link to Flickr -->
+
+    </div> 
+<!-- End Display Content Area -->      
+
+<!--Popup Area-->
+<md-button href="#popup" class="button"  ng-click="showContact = true" ng-show="!showContact" >Read Post </md-button>
+
+
+<!--An exceptio from the LightBox -->
+<p> <b>Tags:</b> {{ classified.tags }} </p>
+<!--Back to content from the Light Box-->
+
+<!--LightBox Template-->
+<div id="popup" class="classified-contact overlay" ng-show="showContact" >
+	<div class="popup">
+	  <h2 class="md-title"> {{ classified.title }}</h2>
+		<a class="close" ng-click="showContact = false">&times;</a>  <!--  Close Symbol -->
+  		<div class="content">
+  		  <p><b>Author:</b> {{ classified.author }} </p> 		  
+  			<p> <div ng-bind-html="trustAsHtml(classified.description)"></div></p>
+  			<br>   <md-button class="blue" ng-click="showContact = false" ng-show="showContact">Return</md-button>
+  		</div>
+	</div>
+</div>
+<!-- End LightBox Template-->
+    
+        </md-card-content>
+  </md-card>
+</md-content> 
+
+
+
+
+<!--< End Posts Template-->
+
+
+
+<!--Scripts-->
+<script src="node_modules/angular/angular.js"></script>  
+<script src="node_modules/angular-animate/angular-animate.js"></script>
+<script src="node_modules/angular-aria/angular-aria.js"></script>
+<script src="node_modules/angular-material/angular-material.js"></script>
+<script src="node_modules/angular-material-icons/angular-material-icons.js"></script> 
+<script src="node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+
+<script src="components/classifieds.ctr.js"></script>
+<script src="components/classifieds.fac.js"></script>
+
+
+</body>
+
+</html>
